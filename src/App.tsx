@@ -1,35 +1,164 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
+import "./App.css"; // 일단은 사용...
+import QuestionPage from "Components/QuestionPage";
+import TypingEffect from "Components/TypingEffect";
 
-function App() {
-  const [count, setCount] = useState(0)
+function Terminal() {
+  const [input, setInput] = useState<string>(""); // 사용자 입력
+  const [content, setContent] = useState<Array<JSX.Element>>([]); // 출력할 콘텐츠
+  const [inputEnabled, setInputEnabled] = useState<boolean>(false); // 입력 동안 키보드 이벤트 막기
+  const navigate = useNavigate();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (inputEnabled) {
+      setInput(e.target.value); // 입력값 업데이트
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (inputEnabled && e.key === "Enter") {
+      const trimmedInput = input.trim().toLowerCase(); // 대소문자 구분 X
+      if (trimmedInput === "start") {
+        navigate("/question"); // 설문 조사 시작
+      } else if (trimmedInput === "about") {
+        setInputEnabled(false); // 입력 막고 about 출력
+        setContent((prevContent) => [
+          ...prevContent,
+          <p>&gt;&gt;&gt; {input}</p>,
+          <TypingEffect
+            key={prevContent.length + 1}
+            text={aboutText}
+            speed={20}
+            onComplete={() => setInputEnabled(true)}
+          />,
+        ]);
+      } else if (trimmedInput === "clear") {
+        // 초기값 제외하고 다 지우기
+        setContent([
+          <TypingEffect
+            key={0}
+            text={initialText}
+            speed={20}
+            onComplete={() => setInputEnabled(true)}
+          />,
+        ]);
+      } else {
+        // echo
+        setContent((prevContent) => [
+          ...prevContent,
+          <p>&gt;&gt;&gt; {input}</p>,
+          <TypingEffect
+            key={prevContent.length}
+            text={`${input}`}
+            speed={20}
+          />,
+        ]);
+      }
+      setInput("");
+    }
+  };
+
+  const initialText = `
+Webti에 오신 것을 환영합니다.
+Webti는 설문조사를 통해서 사용자의 적성이 프론트엔드인지 백엔드인지 검사합니다.
+-----------------------------------------------------------------------
+help
+start : Start Webti
+about : Information about the project or developer
+clear : clears the terminal screen
+-----------------------------------------------------------------------
+`;
+
+  const aboutText = `
+Team-Name: meot-ppo
+Email: dsky03@naver.com
+GitHub: https://github.com/team-meot-ppo
+Interesting: backend, frontend
+Update: 2024/06/26
+`;
+
+  // 초기 텍스트 로드
+  React.useEffect(() => {
+    setContent([
+      <TypingEffect
+        key={0}
+        text={initialText}
+        speed={10}
+        onComplete={() => setInputEnabled(true)}
+      />,
+    ]);
+  }, [initialText]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="terminal bg-black text-white font-mono p-4">
+      {/* 제목 */}
+      <pre className="ascii-art">
+        {`
+          _____                    _____                    _____                _____                    _____
+         /\\    \\                  /\\    \\                  /\\    \\              /\\    \\                  /\\    \\
+        /::\\____\\                /::\\    \\                /::\\    \\            /::\\    \\                /::\\    \\
+       /:::/    /               /::::\\    \\              /::::\\    \\           \\:::\\    \\               \\:::\\    \\
+      /:::/   _/___            /::::::\\    \\            /::::::\\    \\           \\:::\\    \\               \\:::\\    \\
+     /:::/   /\\    \\          /:::/\\:::\\    \\          /:::/\\:::\\    \\           \\:::\\    \\               \\:::\\    \\
+    /:::/   /::\\____\\        /:::/__\\:::\\    \\        /:::/__\\:::\\    \\           \\:::\\    \\               \\:::\\    \\
+   /:::/   /:::/    /       /::::\\   \\:::\\    \\      /::::\\   \\:::\\    \\          /::::\\    \\              /::::\\    \\
+  /:::/   /:::/   _/___    /::::::\\   \\:::\\    \\    /::::::\\   \\:::\\    \\        /::::::\\    \\    ____    /::::::\\    \\
+ /:::/___/:::/   /\\    \\  /:::/\\:::\\   \\:::\\    \\  /:::/\\:::\\   \\:::\\ ___\\      /:::/\\:::\\    \\  /\\   \\  /:::/\\:::\\    \\
+|:::|   /:::/   /::\\____\\/:::/__\\:::\\   \\:::\\____\\/:::/__\\:::\\   \\:::|    |    /:::/  \\:::\\____\\/::\\   \\/:::/  \\:::\\____\\
+|:::|__/:::/   /:::/    /\\:::\\   \\:::\\   \\::/    /\\:::\\   \\:::\\  /:::|____|   /:::/    \\::/    /\\:::\\  /:::/    \\::/    /
+ \\:::\\/:::/   /:::/    /  \\:::\\   \\:::\\   \\/____/  \\:::\\   \\:::\\/:::/    /   /:::/    / \\/____/  \\:::\\/:::/    / \\/____/
+  \\::::::/   /:::/    /    \\:::\\   \\:::\\    \\       \\:::\\   \\::::::/    /   /:::/    /            \\::::::/    /
+   \\::::/___/:::/    /      \\:::\\   \\:::\\____\\       \\:::\\   \\::::/    /   /:::/    /              \\::::/____/
+    \\:::\\__/:::/    /        \\:::\\   \\::/    /        \\:::\\  /:::/    /    \\::/    /                \\:::\\    \\
+     \\::::::::/    /          \\:::\\   \\/____/          \\:::\\/:::/    /      \\/____/                  \\:::\\    \\
+      \\::::::/    /            \\:::\\    \\               \\::::::/    /                                 \\:::\\    \\
+       \\::::/    /              \\:::\\____\\               \\::::/    /                                   \\:::\\____\\
+        \\::/____/                \\::/    /                \\::/____/                                     \\::/    /
+         ~~                       \\/____/                  ~~                                            \\/____/
+        `}
+      </pre>
+      {/* key 값을 이용해서 콘텐츠 출력 */}
+      <div className="content">
+        {content.map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      {/* 입력창 출력 */}
+      {inputEnabled && (
+        <div className="commands mt-4">
+          <p>
+            &gt;&gt;&gt;{" "}
+            <input
+              type="text"
+              value={input}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyPress}
+              className="bg-black text-white outline-none"
+              autoFocus
+            />
+          </p>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Terminal />} />
+        {/* 임의로 만든 것임 */}
+        <Route path="/question" element={<QuestionPage />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
