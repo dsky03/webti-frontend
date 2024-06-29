@@ -11,10 +11,12 @@ body {
 .terminal {
   color: white;
   font-family: monospace;
-  padding: 1rem;
+  width: 98vw;
+  height: 96vh;
+  overflow: auto;
 }
 
 .ascii-art {
   white-space: pre;
-  font-size: 0.6em;
+  font-size: 6px;
 }

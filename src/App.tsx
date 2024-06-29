@@ -49,8 +49,21 @@ function Terminal() {
             onComplete={() => setInputEnabled(true)}
           />,
         ]);
+      } else if (trimmedInput === "help") {
+        setInputEnabled(false); // 입력 막고 about 출력
+        setContent((prevContent) => [
+          ...prevContent,
+          <p>&gt;&gt;&gt; {input}</p>,
+          <TypingEffect
+            key={prevContent.length + 1}
+            text={helpText}
+            speed={20}
+            onComplete={() => setInputEnabled(true)}
+          />,
+        ]);
       } else {
         // echo
+        setInputEnabled(false); // 입력 막고 echo 출력
         setContent((prevContent) => [
           ...prevContent,
           <p>&gt;&gt;&gt; {input}</p>,
@@ -58,6 +71,7 @@ function Terminal() {
             key={prevContent.length}
             text={`${input}`}
             speed={20}
+            onComplete={() => setInputEnabled(true)}
           />,
         ]);
       }
@@ -90,6 +104,18 @@ function Terminal() {
           onComplete={() => setInputEnabled(true)}
         />,
       ]);
+    } else if (trimmedInput === "help") {
+      setInputEnabled(false);
+      setContent((prevContent) => [
+        ...prevContent,
+        <p>&gt;&gt;&gt; {command}</p>,
+        <TypingEffect
+          key={prevContent.length + 1}
+          text={helpText}
+          speed={20}
+          onComplete={() => setInputEnabled(true)}
+        />,
+      ]);
     } else {
       setContent((prevContent) => [
         ...prevContent,
@@ -107,12 +133,6 @@ function Terminal() {
   const initialText = `
 Webti에 오신 것을 환영합니다.
 Webti는 설문조사를 통해서 사용자의 적성이 프론트엔드인지 백엔드인지 검사합니다.
------------------------------------------------------------------------
-help
-start : Start Webti
-about : Information about the project or developer
-clear : clears the terminal screen
------------------------------------------------------------------------
 `;
 
   const aboutText = `
@@ -122,6 +142,15 @@ GitHub: https://github.com/team-meot-ppo
 Interesting: backend, frontend
 Update: 2024/06/26
 `;
+
+  const helpText = `
+-----------------------------------------------------------------------
+help
+start : Start Webti
+about : Information about the project or developer
+clear : clears the terminal screen
+-----------------------------------------------------------------------
+  `;
 
   // 초기 텍스트 로드
   React.useEffect(() => {
@@ -136,8 +165,8 @@ Update: 2024/06/26
   }, [initialText]);
 
   return (
-    <div className="terminal bg-black text-white font-mono">
-      <div className="absolute top-2 left-2">
+    <div className="terminal bg-black text-white font-mono border-2 rounded-md p-5 m-2">
+      <div className="absolute top- right-10">
         <Dropdown onCommand={handleCommand} />
       </div>
       {/* 제목 */}
