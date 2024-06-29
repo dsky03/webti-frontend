@@ -6,8 +6,9 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "./App.css"; // 일단은 사용...
-import QuestionPage from "Components/QuestionPage";
+import QuestionPage from "Pages/QuestionPage";
 import TypingEffect from "Components/TypingEffect";
+import Dropdown from "Components/DropDown";
 
 function Terminal() {
   const [input, setInput] = useState<string>(""); // 사용자 입력
@@ -64,6 +65,45 @@ function Terminal() {
     }
   };
 
+  const handleCommand = (command: string) => {
+    const trimmedInput = command.trim().toLowerCase();
+    if (trimmedInput === "start") {
+      navigate("/question");
+    } else if (trimmedInput === "about") {
+      setInputEnabled(false);
+      setContent((prevContent) => [
+        ...prevContent,
+        <p>&gt;&gt;&gt; {command}</p>,
+        <TypingEffect
+          key={prevContent.length + 1}
+          text={aboutText}
+          speed={20}
+          onComplete={() => setInputEnabled(true)}
+        />,
+      ]);
+    } else if (trimmedInput === "clear") {
+      setContent([
+        <TypingEffect
+          key={0}
+          text={initialText}
+          speed={20}
+          onComplete={() => setInputEnabled(true)}
+        />,
+      ]);
+    } else {
+      setContent((prevContent) => [
+        ...prevContent,
+        <p>&gt;&gt;&gt; {command}</p>,
+        <TypingEffect
+          key={prevContent.length}
+          text={`${command}`}
+          speed={20}
+        />,
+      ]);
+    }
+    setInput("");
+  };
+
   const initialText = `
 Webti에 오신 것을 환영합니다.
 Webti는 설문조사를 통해서 사용자의 적성이 프론트엔드인지 백엔드인지 검사합니다.
@@ -96,9 +136,12 @@ Update: 2024/06/26
   }, [initialText]);
 
   return (
-    <div className="terminal bg-black text-white font-mono p-4">
+    <div className="terminal bg-black text-white font-mono">
+      <div className="absolute top-2 left-2">
+        <Dropdown onCommand={handleCommand} />
+      </div>
       {/* 제목 */}
-      <pre className="ascii-art">
+      <pre className="ascii-art m-0 p-0">
         {`
           _____                    _____                    _____                _____                    _____
          /\\    \\                  /\\    \\                  /\\    \\              /\\    \\                  /\\    \\
