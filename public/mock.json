@@ -1,0 +1,101 @@
+{
+  "success": "true",
+  "data": [
+    {
+      "result": "백엔드 데이터 관리자",
+      "count": 232,
+      "matchCount": 154,
+      "modifiedAt": "2024-06-27T21:03:55"
+    },
+    {
+      "result": "전략적 시스템 설계형 백엔드 개발자",
+      "count": 100,
+      "matchCount": 60,
+      "modifiedAt": "2024-06-27T21:03:55"
+    },
+    {
+      "result": "효율적인 문제 해결형 백엔드 개발자",
+      "count": 224,
+      "matchCount": 112,
+      "modifiedAt": "2024-06-27T21:03:55"
+    },
+    {
+      "result": "혁신적인 알고리즘 전문가 백엔드 개발자",
+      "count": 89,
+      "matchCount": 37,
+      "modifiedAt": "2024-06-27T21:03:55"
+    },
+    {
+      "result": "섬세한 사용자 경험 디자이너형 프론트엔드 개발자",
+      "count": 189,
+      "matchCount": 124,
+      "modifiedAt": "2024-06-27T21:03:55"
+    },
+    {
+      "result": "창의적인 인터페이스 디자이너형 프론트엔드 개발자",
+      "count": 200,
+      "matchCount": 142,
+      "modifiedAt": "2024-06-27T21:03:55"
+    },
+    {
+      "result": "혁신적인 UX/UI 전문가형 프론트엔드 개발자",
+      "count": 177,
+      "matchCount": 122,
+      "modifiedAt": "2024-06-27T21:03:55"
+    },
+    {
+      "result": "사용자 중심 인터페이스 개발자형 프론트엔드 개발자",
+      "count": 233,
+      "matchCount": 193,
+      "modifiedAt": "2024-06-27T21:03:56"
+    },
+    {
+      "result": "전체 비전을 갖춘 개발자형 풀스택 개발자",
+      "count": 102,
+      "matchCount": 47,
+      "modifiedAt": "2024-06-27T21:03:56"
+    },
+    {
+      "result": "다양한 기술을 아우르는 문제 해결사형 풀스택 개발자",
+      "count": 100,
+      "matchCount": 50,
+      "modifiedAt": "2024-06-27T21:03:56"
+    },
+    {
+      "result": "협력과 조정을 이끄는 개발자형 풀스택 개발자",
+      "count": 100,
+      "matchCount": 50,
+      "modifiedAt": "2024-06-27T21:03:56"
+    },
+    {
+      "result": "전략적 프로젝트 리더형 풀스택 개발자",
+      "count": 100,
+      "matchCount": 50,
+      "modifiedAt": "2024-06-27T21:03:56"
+    },
+    {
+      "result": "백엔드 데이터 분석가",
+      "count": 100,
+      "matchCount": 50,
+      "modifiedAt": "2024-06-27T21:03:56"
+    },
+    {
+      "result": "백엔드 시스템 혁신가",
+      "count": 100,
+      "matchCount": 50,
+      "modifiedAt": "2024-06-27T21:03:56"
+    },
+    {
+      "result": "프론트엔드 상호작용 디자이너",
+      "count": 100,
+      "matchCount": 50,
+      "modifiedAt": "2024-06-27T21:03:56"
+    },
+    {
+      "result": "풀스택 조직 관리자",
+      "count": 100,
+      "matchCount": 50,
+      "modifiedAt": "2024-06-27T21:03:56"
+    }
+  ]
+}
