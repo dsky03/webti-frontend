@@ -133,6 +133,7 @@ function Terminal() {
   const initialText = `
 Webti에 오신 것을 환영합니다.
 Webti는 설문조사를 통해서 사용자의 적성이 프론트엔드인지 백엔드인지 검사합니다.
+특정 명령어에 대한 자세한 내용이 필요하면 help 명령어 이름을 입력하세요.
 `;
 
   const aboutText = `
@@ -146,9 +147,9 @@ Update: 2024/06/26
   const helpText = `
 -----------------------------------------------------------------------
 help
-start : Start Webti
-about : Information about the project or developer
-clear : clears the terminal screen
+start : Webti를 시작합니다.
+about : 개발자 또는 프로젝트에 대한 정보를 표시합니다.
+clear : 터미널 화면을 지웁니다.
 -----------------------------------------------------------------------
   `;
 
