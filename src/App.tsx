@@ -9,7 +9,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Terminal />} />
-        {/* 임의로 만든 것임 */}
         <Route path="/question" element={<QuestionPage />} />
         <Route path="/result" element={<ResultPage />}></Route>
       </Routes>
