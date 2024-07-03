@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
+import React, { useEffect, useState } from 'react';
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,7 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -27,6 +27,7 @@ interface ChartData {
     backgroundColor: string;
     borderColor: string;
     borderWidth: number;
+    order: number;
   }[];
 }
 
@@ -46,10 +47,10 @@ const ResultChart: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       await delay(1500);
-      fetch("/statistics.json")
+      fetch('/statistics.json')
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error('Network response was not ok');
           }
           return response.json();
         })
@@ -64,24 +65,26 @@ const ResultChart: React.FC = () => {
             labels,
             datasets: [
               {
-                label: "결과",
+                label: '나온 결과 수',
                 data: counts,
-                backgroundColor: "darkgray",
-                borderColor: "white",
-                borderWidth: 1,
+                backgroundColor: 'LightSkyBlue',
+                borderColor: 'grey',
+                borderWidth: 2,
+                order: 1,
               },
               {
-                label: "정확도",
+                label: '정확한 결과',
                 data: matchCounts,
-                backgroundColor: "gray",
-                borderColor: "white",
-                borderWidth: 1,
+                backgroundColor: 'LightYellow',
+                borderColor: 'grey',
+                borderWidth: 2,
+                order: 0,
               },
             ],
           });
         })
         .catch((error) => {
-          console.error("There was a problem with the fetch operation:", error);
+          console.error('There was a problem with the fetch operation:', error);
         });
     };
 
@@ -93,17 +96,19 @@ const ResultChart: React.FC = () => {
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: "#00ff00" },
-        grid: { color: "grey" },
+        ticks: { color: '#00ff00' },
+        grid: { color: 'grey' },
+        stacked: true,
       },
       y: {
-        ticks: { color: "#00ff00" },
-        grid: { color: "grey" },
+        ticks: { color: '#00ff00' },
+        grid: { color: 'grey' },
+        beginAtZero: true,
       },
     },
     plugins: {
       legend: {
-        labels: { color: "#00ff00" },
+        labels: { color: '#00ff00' },
       },
     },
     layout: {
@@ -111,7 +116,6 @@ const ResultChart: React.FC = () => {
     },
   };
 
-  // 나중에 수정할 것
   return (
     <>
       {chartData ? (
