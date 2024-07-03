@@ -118,7 +118,7 @@ const ResultChart: React.FC = () => {
       {chartData ? (
         <>
           <p className="text-2xl mb-5">다른 사용자의 결과</p>
-          <p>&gt;&gt;&gt; 결과는 한 시간 마다 갱신됩니다.</p>
+          <p>&gt;&gt;&gt; 결과는 한 시간마다 갱신됩니다.</p>
           <Bar data={chartData} options={options} />
         </>
       ) : (
