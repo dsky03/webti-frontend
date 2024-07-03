@@ -63,7 +63,7 @@ const ResultChart: React.FC = () => {
           labels,
           datasets: [
             {
-              label: '나온 결과 수',
+              label: ' 총횟수',
               data: counts,
               backgroundColor: 'LightSkyBlue',
               borderColor: 'grey',
@@ -71,7 +71,7 @@ const ResultChart: React.FC = () => {
               order: 1,
             },
             {
-              label: '정확한 결과',
+              label: '일치 횟수',
               data: matchCounts,
               backgroundColor: 'LightYellow',
               borderColor: 'grey',
