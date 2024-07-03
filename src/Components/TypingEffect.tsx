@@ -28,7 +28,7 @@ const TypingEffect: React.FC<TypingEffectProps> = ({
     return () => clearInterval(typingInterval); // 언마운트 시 인터벌 제거
   }, [index, text, speed, onComplete]);
 
-  return <pre>{displayedText}</pre>;
+  return <pre style={{ whiteSpace: "pre-wrap" }}>{displayedText}</pre>;
 };
 
 export default TypingEffect;
