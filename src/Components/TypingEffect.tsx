@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 interface TypingEffectProps {
   text: string; // 출력할 테스트
@@ -11,11 +11,22 @@ const TypingEffect: React.FC<TypingEffectProps> = ({
   speed = 40,
   onComplete,
 }) => {
-  const [displayedText, setDisplayedText] = useState<string>(""); // 화면에 표시되는 텍스트
+  const [displayedText, setDisplayedText] = useState<string>(''); // 화면에 표시되는 텍스트
   const [index, setIndex] = useState<number>(0); // 텍스트의 인덱스
+
+  const reset = () => {
+    setDisplayedText('');
+    setIndex(0);
+  };
 
   useEffect(() => {
     const typingInterval = setInterval(() => {
+      // text 변경시 초기화
+      if (text.slice(0, displayedText.length) !== displayedText) {
+        reset();
+        return;
+      }
+
       if (index < text.length) {
         setDisplayedText((prev) => prev + text[index]); //한 글자씩 추가
         setIndex((prevIndex) => prevIndex + 1);
@@ -28,7 +39,7 @@ const TypingEffect: React.FC<TypingEffectProps> = ({
     return () => clearInterval(typingInterval); // 언마운트 시 인터벌 제거
   }, [index, text, speed, onComplete]);
 
-  return <pre style={{ whiteSpace: "pre-wrap" }}>{displayedText}</pre>;
+  return <pre className="font-[DungGeunMo]">{displayedText}</pre>;
 };
 
 export default TypingEffect;
