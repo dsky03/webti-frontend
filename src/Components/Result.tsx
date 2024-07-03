@@ -15,10 +15,18 @@ const Result: React.FC<Props> = ({ onSubmit }: Props) => {
   const [surveyData, setSurveyData] = useState<SurveyData | null>(null);
   const [typingCompleted, setTypingCompleted] = useState(false);
 
-  const [input, setInput] = useState<string>(''); // 사용자 입력
+  const [input, setInput] = useState<string>(() => {
+    const response = localStorage.getItem('answer_response');
+    return response === 'yes' || response === 'no' ? response : '';
+  }); // 사용자 입력
   const [inputEnabled, setInputEnabled] = useState<boolean>(false); // 입력 동안 키보드 이벤트 막기
 
-  const [isSubmited, setSubmited] = useState<boolean>(false); // 결과 제출 여부
+  const [isSubmited, setSubmited] = useState<boolean>(() => {
+    const response = localStorage.getItem('answer_response');
+    console.log('res', response)
+
+    return response === 'yes' || response === 'no';
+  }); // 결과 제출 여부
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (inputEnabled) {
@@ -48,6 +56,7 @@ const Result: React.FC<Props> = ({ onSubmit }: Props) => {
         submitAnswer(surveyData!.mbtiType, trimmedInput === 'yes');
         setSubmited(true);
         onSubmit();
+        localStorage.setItem('answer_response', trimmedInput);
       }
     }
   };

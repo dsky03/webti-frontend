@@ -4,7 +4,10 @@ import TerminalBox from 'Components/TerminalBox';
 import { useState } from 'react';
 
 function ResultPage() {
-  const [showChart, setShowChart] = useState<boolean>(false);
+  const [showChart, setShowChart] = useState<boolean>(() => {
+    const response = localStorage.getItem('answer_response');
+    return response === 'yes' || response === 'no';
+  });
 
   return (
     <TerminalBox>
