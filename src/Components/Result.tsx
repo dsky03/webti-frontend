@@ -20,6 +20,7 @@ const Result: React.FC = () => {
     }
   };
 
+  // 결과 가져오기
   useEffect(() => {
     fetch("/result.json")
       .then((response) => {
@@ -40,6 +41,7 @@ const Result: React.FC = () => {
     return <p>Loading...</p>;
   }
 
+  // 결과 text
   const resultText = `
 Your webit result : 
 ${surveyData.result}

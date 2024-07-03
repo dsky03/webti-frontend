@@ -51,7 +51,7 @@ function Terminal() {
           <TypingEffect
             key={prevContent.length + 1}
             text={helpText}
-            speed={20}
+            speed={10}
             onComplete={() => setInputEnabled(true)}
           />,
         ]);
@@ -106,7 +106,7 @@ function Terminal() {
         <TypingEffect
           key={prevContent.length + 1}
           text={helpText}
-          speed={20}
+          speed={10}
           onComplete={() => setInputEnabled(true)}
         />,
       ]);
@@ -135,7 +135,7 @@ Team-Name: meot-ppo
 Email: dsky03@naver.com
 GitHub: https://github.com/team-meot-ppo
 Interesting: backend, frontend
-Update: 2024/06/26
+Update: 2024/07/03
 `;
 
   const helpText = `
@@ -153,7 +153,7 @@ clear : 터미널 화면을 지웁니다.
       <TypingEffect
         key={0}
         text={initialText}
-        speed={10}
+        speed={20}
         onComplete={() => setInputEnabled(true)}
       />,
     ]);
@@ -161,7 +161,8 @@ clear : 터미널 화면을 지웁니다.
 
   return (
     <>
-      {/* tailwind는 rgb값 -> hex값으로 변환 */}
+      {/* tailwind : rgb값 -> hex값으로 변환 */}
+      {/* 상단 바 */}
       <div className="m-2 mb-0 p-4 h-8 bg-[#2b2b2b] rounded-t-lg flex items-center font-mono">
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
@@ -170,6 +171,7 @@ clear : 터미널 화면을 지웁니다.
         </div>
         <span className="text-white text-sm ml-auto">cmd</span>
       </div>
+      {/* 터미널 */}
       <div className="terminal bg-black text-white font-mono border-2 border-[#2b2b2b] rounded-b-lg p-5 m-2 mt-0">
         <div className="absolute top-15 right-10">
           <Dropdown onCommand={handleCommand} />

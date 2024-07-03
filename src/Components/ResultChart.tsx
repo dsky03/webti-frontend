@@ -39,6 +39,7 @@ interface DataItem {
 // 페이크 타임
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// 차트
 const ResultChart: React.FC = () => {
   const [chartData, setChartData] = useState<ChartData | null>(null);
 
@@ -110,12 +111,13 @@ const ResultChart: React.FC = () => {
     },
   };
 
+  // 나중에 수정할 것
   return (
     <>
       {chartData ? (
         <>
-          <p>다른 사용자의 결과</p>
-          <p>결과는 한 시간 마다 갱신됩니다.</p>
+          <p className="text-2xl mb-5">다른 사용자의 결과</p>
+          <p>&gt;&gt;&gt; 결과는 한 시간 마다 갱신됩니다.</p>
           <Bar data={chartData} options={options} />
         </>
       ) : (
