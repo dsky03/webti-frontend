@@ -76,13 +76,13 @@ const Result: React.FC<Props> = ({ onSubmit }: Props) => {
         onComplete={() => setTypingCompleted(true)}
       />
       {typingCompleted && (
-        <div className="result-content">
+        <div className="flex flex-row max-sm:flex-col items-start">
           <img
-            className="result-image"
+            className="w-[200px] max-sm:w-full mt-2.5 mr-5"
             src={surveyData.imageDto.url}
             alt="result-image"
           />
-          <div className="description-box break-all">
+          <div className="border border-white border-2 p-2.5 my-2.5 w-[600px] max-sm:w-full min-h-[200px] break-all">
             <TypingEffect
               text={surveyData.description}
               speed={20}

@@ -54,8 +54,8 @@ function QuestionBox() {
 
   return (
     <>
-      <div className="box shadow-[16px_16px_0_0_black] bg-gray-300 text-black m-5 w-fit mx-auto p-2 transition-colors min-w-96">
-        <h1 className="border-2 border-black p-4 py-3 border-double ">
+      <div className="box shadow-[16px_16px_0_0_black] bg-gray-300 text-black m-5 w-fit mx-auto p-2 transition-colors min-w-96 max-sm:min-w-fit">
+        <h1 className="border-2 border-black p-4 py-3 border-double">
           Question: <br />
           <TypingEffect
             text={questions[currentIndex].question}

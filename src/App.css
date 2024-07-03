@@ -27,23 +27,6 @@ body {
   margin: 5px 0;
 }
 
-.result-content {
-  display: flex;
-  align-items: flex-start;
-}
-
-.result-image {
-  width: 200px;
-  margin: 10px 20px 0 0;
-}
-
-.description-box {
-  border: 2px solid white;
-  padding: 10px;
-  margin: 10px 0;
-  width: 600px;
-  height: 200px;
-}
 
 *::-webkit-scrollbar {
   width: 16px;

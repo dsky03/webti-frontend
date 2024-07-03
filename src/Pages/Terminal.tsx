@@ -165,7 +165,7 @@ clear : 터미널 화면을 지웁니다.
         <Dropdown onCommand={handleCommand} />
       </div>
       {/* 제목 */}
-      <pre className="ascii-art m-0 p-0">
+      <pre className="ascii-art m-0 p-0 max-sm:text-[4px]">
         {`
           _____                    _____                    _____                _____                    _____
          /\\    \\                  /\\    \\                  /\\    \\              /\\    \\                  /\\    \\
