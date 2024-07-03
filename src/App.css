@@ -44,3 +44,17 @@ body {
   width: 600px;
   height: 200px;
 }
+
+*::-webkit-scrollbar {
+  width: 16px;
+  padding: 4px 0;
+}
+*::-webkit-scrollbar-button {
+  display: none;
+}
+*::-webkit-scrollbar-thumb {
+  background: #555;
+  background-clip: padding-box;
+  border: 3.5px solid transparent;
+  border-radius: 8px;
+}
