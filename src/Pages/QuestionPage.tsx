@@ -1,5 +1,3 @@
-import React from "react";
-
 // 임의 페이지
 function QuestionPage() {
   return (

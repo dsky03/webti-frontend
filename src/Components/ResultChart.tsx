@@ -45,7 +45,7 @@ const ResultChart: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       await delay(1500);
-      fetch("/mock.json") // Fetching from the public directory
+      fetch("/statistics.json")
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -63,14 +63,14 @@ const ResultChart: React.FC = () => {
             labels,
             datasets: [
               {
-                label: "Count",
+                label: "결과",
                 data: counts,
                 backgroundColor: "darkgray",
                 borderColor: "white",
                 borderWidth: 1,
               },
               {
-                label: "Match Count",
+                label: "정확도",
                 data: matchCounts,
                 backgroundColor: "gray",
                 borderColor: "white",
@@ -114,7 +114,8 @@ const ResultChart: React.FC = () => {
     <>
       {chartData ? (
         <>
-          <h2>통계</h2>
+          <p>다른 사용자의 결과</p>
+          <p>결과는 한 시간 마다 갱신됩니다.</p>
           <Bar data={chartData} options={options} />
         </>
       ) : (

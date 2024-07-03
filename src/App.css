@@ -4,19 +4,44 @@ body {
   justify-content: center;
   align-items: center;
   background-color: black;
-  color: white;
   font-family: "Courier New", Courier, monospace;
 }
 
 .terminal {
-  color: white;
   font-family: monospace;
   width: 98vw;
-  height: 96vh;
+  height: 92vh;
   overflow: auto;
 }
 
 .ascii-art {
   white-space: pre;
   font-size: 6px;
+}
+
+.survey-result {
+  margin-bottom: 20px;
+}
+
+.survey-result p {
+  margin: 5px 0;
+}
+
+.result-content {
+  display: flex;
+  align-items: flex-start;
+}
+
+.result-image {
+  width: 400px;
+  margin: 10px 20px 0 0;
+}
+
+.description-box {
+  border: 2px solid white;
+  padding: 10px;
+  margin: 10px 0;
+  width: 600px;
+  height: 400px;
+  /* flex-grow: 1; */
 }
