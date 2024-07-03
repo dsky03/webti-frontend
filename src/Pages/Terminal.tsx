@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import "../App.css"; // 일단은 사용...
-import { useNavigate } from "react-router-dom";
-import TypingEffect from "../Components/TypingEffect";
-import Dropdown from "Components/DropDown";
+import React, { useState } from 'react';
+import '../App.css'; // 일단은 사용...
+import { useNavigate } from 'react-router-dom';
+import TypingEffect from '../Components/TypingEffect';
+import Dropdown from 'Components/DropDown';
+import TerminalBox from 'Components/TerminalBox';
 
 function Terminal() {
-  const [input, setInput] = useState<string>(""); // 사용자 입력
+  const [input, setInput] = useState<string>(''); // 사용자 입력
   const [content, setContent] = useState<Array<JSX.Element>>([]); // 출력할 콘텐츠
   const [inputEnabled, setInputEnabled] = useState<boolean>(false); // 입력 동안 키보드 이벤트 막기
   const navigate = useNavigate();
@@ -17,11 +18,11 @@ function Terminal() {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (inputEnabled && e.key === "Enter") {
+    if (inputEnabled && e.key === 'Enter') {
       const trimmedInput = input.trim().toLowerCase(); // 대소문자 구분 X
-      if (trimmedInput === "start") {
-        navigate("/question"); // 설문 조사 시작
-      } else if (trimmedInput === "about") {
+      if (trimmedInput === 'start') {
+        navigate('/question'); // 설문 조사 시작
+      } else if (trimmedInput === 'about') {
         setInputEnabled(false); // 입력 막고 about 출력
         setContent((prevContent) => [
           ...prevContent,
@@ -33,7 +34,7 @@ function Terminal() {
             onComplete={() => setInputEnabled(true)}
           />,
         ]);
-      } else if (trimmedInput === "clear") {
+      } else if (trimmedInput === 'clear') {
         // 초기값 제외하고 다 지우기
         setContent([
           <TypingEffect
@@ -43,7 +44,7 @@ function Terminal() {
             onComplete={() => setInputEnabled(true)}
           />,
         ]);
-      } else if (trimmedInput === "help") {
+      } else if (trimmedInput === 'help') {
         setInputEnabled(false); // 입력 막고 about 출력
         setContent((prevContent) => [
           ...prevContent,
@@ -69,15 +70,15 @@ function Terminal() {
           />,
         ]);
       }
-      setInput("");
+      setInput('');
     }
   };
 
   const handleCommand = (command: string) => {
     const trimmedInput = command.trim().toLowerCase();
-    if (trimmedInput === "start") {
-      navigate("/question");
-    } else if (trimmedInput === "about") {
+    if (trimmedInput === 'start') {
+      navigate('/question');
+    } else if (trimmedInput === 'about') {
       setInputEnabled(false);
       setContent((prevContent) => [
         ...prevContent,
@@ -89,7 +90,7 @@ function Terminal() {
           onComplete={() => setInputEnabled(true)}
         />,
       ]);
-    } else if (trimmedInput === "clear") {
+    } else if (trimmedInput === 'clear') {
       setContent([
         <TypingEffect
           key={0}
@@ -98,7 +99,7 @@ function Terminal() {
           onComplete={() => setInputEnabled(true)}
         />,
       ]);
-    } else if (trimmedInput === "help") {
+    } else if (trimmedInput === 'help') {
       setInputEnabled(false);
       setContent((prevContent) => [
         ...prevContent,
@@ -121,7 +122,7 @@ function Terminal() {
         />,
       ]);
     }
-    setInput("");
+    setInput('');
   };
 
   const initialText = `
@@ -160,25 +161,13 @@ clear : 터미널 화면을 지웁니다.
   }, [initialText]);
 
   return (
-    <>
-      {/* tailwind : rgb값 -> hex값으로 변환 */}
-      {/* 상단 바 */}
-      <div className="m-2 mb-0 p-4 h-8 bg-[#2b2b2b] rounded-t-lg flex items-center font-mono">
-        <div className="flex items-center space-x-2">
-          <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-          <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-          <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-        </div>
-        <span className="text-white text-sm ml-auto">cmd</span>
+    <TerminalBox>
+      <div className="absolute top-15 right-10">
+        <Dropdown onCommand={handleCommand} />
       </div>
-      {/* 터미널 */}
-      <div className="terminal bg-black text-white font-mono border-2 border-[#2b2b2b] rounded-b-lg p-5 m-2 mt-0">
-        <div className="absolute top-15 right-10">
-          <Dropdown onCommand={handleCommand} />
-        </div>
-        {/* 제목 */}
-        <pre className="ascii-art m-0 p-0">
-          {`
+      {/* 제목 */}
+      <pre className="ascii-art m-0 p-0">
+        {`
           _____                    _____                    _____                _____                    _____
          /\\    \\                  /\\    \\                  /\\    \\              /\\    \\                  /\\    \\
         /::\\____\\                /::\\    \\                /::\\    \\            /::\\    \\                /::\\    \\
@@ -201,31 +190,30 @@ clear : 터미널 화면을 지웁니다.
         \\::/____/                \\::/    /                \\::/____/                                     \\::/    /
          ~~                       \\/____/                  ~~                                            \\/____/
         `}
-        </pre>
-        {/* key 값을 이용해서 콘텐츠 출력 */}
-        <div className="content">
-          {content.map((item, index) => (
-            <div key={index}>{item}</div>
-          ))}
-        </div>
-        {/* 입력창 출력 */}
-        {inputEnabled && (
-          <div className="commands mt-4">
-            <p>
-              &gt;&gt;&gt;{" "}
-              <input
-                type="text"
-                value={input}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyPress}
-                className="bg-black text-white outline-none"
-                autoFocus
-              />
-            </p>
-          </div>
-        )}
+      </pre>
+      {/* key 값을 이용해서 콘텐츠 출력 */}
+      <div className="content">
+        {content.map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
       </div>
-    </>
+      {/* 입력창 출력 */}
+      {inputEnabled && (
+        <div className="commands mt-4">
+          <p>
+            &gt;&gt;&gt;{' '}
+            <input
+              type="text"
+              value={input}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyPress}
+              className="bg-black text-white outline-none"
+              autoFocus
+            />
+          </p>
+        </div>
+      )}
+    </TerminalBox>
   );
 }
 
