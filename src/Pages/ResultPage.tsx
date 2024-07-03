@@ -1,4 +1,3 @@
-import '../App.css';
 import ResultChart from 'Components/ResultChart';
 import Result from 'Components/Result';
 import TerminalBox from 'Components/TerminalBox';

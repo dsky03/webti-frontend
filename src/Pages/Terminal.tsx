@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../App.css'; // 일단은 사용...
 import { useNavigate } from 'react-router-dom';
 import TypingEffect from '../Components/TypingEffect';
 import Dropdown from 'Components/DropDown';

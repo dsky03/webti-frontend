@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from "react";
-import TypingEffect from "./TypingEffect";
-
-interface SurveyData {
-  result: string;
-  description: string;
-  mbtiType: string;
-}
+import React, { useEffect, useState } from 'react';
+import { postAnswers, SurveyData, UserAnswer } from 'util/api/api';
+import TypingEffect from './TypingEffect';
 
 const Result: React.FC = () => {
   const [surveyData, setSurveyData] = useState<SurveyData | null>(null);
   const [typingCompleted, setTypingCompleted] = useState(false);
 
-  const [input, setInput] = useState<string>(""); // 사용자 입력
+  const [input, setInput] = useState<string>(''); // 사용자 입력
   const [inputEnabled, setInputEnabled] = useState<boolean>(false); // 입력 동안 키보드 이벤트 막기
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,18 +17,16 @@ const Result: React.FC = () => {
 
   // 결과 가져오기
   useEffect(() => {
-    fetch("/result.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
+    if (!localStorage.getItem('answer')) {
+      return;
+    }
+    const answer = JSON.parse(localStorage.getItem('answer')!) as UserAnswer;
+    postAnswers(answer)
       .then((data) => {
         setSurveyData(data.data);
       })
       .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
+        console.error('There was a problem with the fetch operation:', error);
       });
   }, []);
 
@@ -42,10 +35,7 @@ const Result: React.FC = () => {
   }
 
   // 결과 text
-  const resultText = `
-Your webit result : 
-${surveyData.result}
-  `;
+  const resultText = `\nYour webti result : \n${surveyData.result}\n\n`;
 
   return (
     <div className="survey-result mb-20">
@@ -58,7 +48,7 @@ ${surveyData.result}
         <div className="result-content">
           <img
             className="result-image"
-            src="/img/INFP.webp"
+            src={surveyData.imageDto.url}
             alt="result-image"
           />
           <div className="description-box break-all">
@@ -74,7 +64,7 @@ ${surveyData.result}
         <div className="commands mt-4">
           <p>결과가 자신과 맞나요? yes/no</p>
           <p>
-            &gt;&gt;&gt;{" "}
+            &gt;&gt;&gt;{' '}
             <input
               type="text"
               value={input}

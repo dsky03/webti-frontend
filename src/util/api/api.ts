@@ -1,5 +1,5 @@
 export type ApiResponse<T> = {
-  success: "true" | "false";
+  success: 'true' | 'false';
   data: T;
 };
 
@@ -15,18 +15,18 @@ export type Option = {
 };
 
 export type PersonalityType =
-  | "EXTROVERSION"
-  | "INTROVERSION"
-  | "SENSING"
-  | "INTUITION"
-  | "THINKING"
-  | "FEELING"
-  | "JUDGING"
-  | "PERCEIVING";
+  | 'EXTROVERSION'
+  | 'INTROVERSION'
+  | 'SENSING'
+  | 'INTUITION'
+  | 'THINKING'
+  | 'FEELING'
+  | 'JUDGING'
+  | 'PERCEIVING';
 
 export type UserAnswer = Record<PersonalityType, number>;
 
-export type TestResult = {
+export type SurveyData = {
   result: string;
   description: string;
   mbtiType: string;
@@ -35,21 +35,35 @@ export type TestResult = {
   };
 };
 
-export type RequestOptions = {
-  method: "GET" | "POST" | "PUT" | "DELETE";
-  body?: Record<string, unknown> | string;
+export type Statistic = {
+  result: string;
+  count: number;
+  matchCount: number;
+  modifiedAt: string;
 };
 
-const API_URL = "https://joon6093.link";
+export type RequestOptions = {
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  body?: Record<string, unknown> | string;
+  headers?: Record<string, string>;
+};
+
+const API_URL = 'https://joon6093.link';
 
 const _fetch = async <T>(
   url: string,
-  options: RequestOptions = { method: "GET" }
+  options: RequestOptions = { method: 'GET' },
 ): Promise<ApiResponse<T>> => {
-  if (options.body && typeof options.body !== "string") {
+  if (options.body && typeof options.body !== 'string') {
     options.body = JSON.stringify(options.body);
+    options.headers = {
+      'Content-Type': 'application/json',
+    };
   }
   const response = await fetch(url, options as RequestInit);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
   const data = await response.json();
   return data;
 };
@@ -62,36 +76,27 @@ export const getQuestions = async (): Promise<ApiResponse<Question[]>> => {
   return await _fetch(`${API_URL}/api/propensity-analysis/v1/question`);
 };
 
-const PERSONALITY_PROPERTIES: Record<PersonalityType, string> = {
-  EXTROVERSION: "E",
-  INTROVERSION: "I",
-  SENSING: "S",
-  INTUITION: "N",
-  THINKING: "T",
-  FEELING: "F",
-  JUDGING: "J",
-  PERCEIVING: "P",
+export const postAnswers = async (
+  answers: UserAnswer,
+): Promise<ApiResponse<SurveyData>> => {
+  return await _fetch(`${API_URL}/api/propensity-analysis/v1/result`, {
+    method: 'POST',
+    body: answers,
+  });
 };
 
-const input = {
-  E: 2,
-  I: 1,
-  N: 2,
-  S: 1,
-  T: 2,
-  F: 1,
-  P: 2,
-  J: 1,
-};
-export const postAnswers = async (
-  answers: UserAnswer
-): Promise<ApiResponse<TestResult>> => {
-  const answer = Object.entries(answers).reduce((acc, [key, value]) => {
-    acc[PERSONALITY_PROPERTIES[key as PersonalityType]] = value;
-    return acc;
-  }, {} as Record<string, number>);
-  return await _fetch(`${API_URL}/api/propensity-analysis/v1/result`, {
-    method: "POST",
-    body: answer,
+export const submitAnswer = async (
+  mbtiType: string,
+  matched: boolean,
+): Promise<ApiResponse<undefined>> => {
+  return await _fetch(`${API_URL}/api/results/v1/test-result`, {
+    method: 'POST',
+    body: { mbtiType, match: matched },
   });
+};
+
+export const getStatistics = async (): Promise<
+  ApiResponse<Statistic[]>
+> => {
+  return await _fetch(`${API_URL}/api/results/v1/statistics`);
 };
