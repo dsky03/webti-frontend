@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
+import { getStatistics } from 'util/api/api';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -46,46 +47,42 @@ const ResultChart: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await delay(1500);
-      fetch('/statistics.json')
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const labels = data.data.map((item: DataItem) => item.result);
-          const counts = data.data.map((item: DataItem) => item.count);
-          const matchCounts = data.data.map(
-            (item: DataItem) => item.matchCount
-          );
+      try {
+        await delay(1500);
+        const response = await getStatistics();
+        if (response.success !== 'true') {
+          throw new Error('Failed to fetch statistics');
+        }
+        const data = response.data;
+        console.log(data);
+        const labels = data.map((item: DataItem) => item.result);
+        const counts = data.map((item: DataItem) => item.count);
+        const matchCounts = data.map((item: DataItem) => item.matchCount);
 
-          setChartData({
-            labels,
-            datasets: [
-              {
-                label: '나온 결과 수',
-                data: counts,
-                backgroundColor: 'LightSkyBlue',
-                borderColor: 'grey',
-                borderWidth: 2,
-                order: 1,
-              },
-              {
-                label: '정확한 결과',
-                data: matchCounts,
-                backgroundColor: 'LightYellow',
-                borderColor: 'grey',
-                borderWidth: 2,
-                order: 0,
-              },
-            ],
-          });
-        })
-        .catch((error) => {
-          console.error('There was a problem with the fetch operation:', error);
+        setChartData({
+          labels,
+          datasets: [
+            {
+              label: '나온 결과 수',
+              data: counts,
+              backgroundColor: 'LightSkyBlue',
+              borderColor: 'grey',
+              borderWidth: 2,
+              order: 1,
+            },
+            {
+              label: '정확한 결과',
+              data: matchCounts,
+              backgroundColor: 'LightYellow',
+              borderColor: 'grey',
+              borderWidth: 2,
+              order: 0,
+            },
+          ],
         });
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
     };
 
     fetchData();
