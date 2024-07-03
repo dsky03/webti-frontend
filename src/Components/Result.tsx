@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { postAnswers, SurveyData, UserAnswer } from 'util/api/api';
+import {
+  postAnswers,
+  submitAnswer,
+  SurveyData,
+  UserAnswer,
+} from 'util/api/api';
 import TypingEffect from './TypingEffect';
 
-const Result: React.FC = () => {
+export interface Props {
+  onSubmit: () => void;
+}
+
+const Result: React.FC<Props> = ({ onSubmit }: Props) => {
   const [surveyData, setSurveyData] = useState<SurveyData | null>(null);
   const [typingCompleted, setTypingCompleted] = useState(false);
 
   const [input, setInput] = useState<string>(''); // 사용자 입력
   const [inputEnabled, setInputEnabled] = useState<boolean>(false); // 입력 동안 키보드 이벤트 막기
+
+  const [isSubmited, setSubmited] = useState<boolean>(false); // 결과 제출 여부
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (inputEnabled) {
@@ -29,6 +40,17 @@ const Result: React.FC = () => {
         console.error('There was a problem with the fetch operation:', error);
       });
   }, []);
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (inputEnabled && e.key === 'Enter') {
+      const trimmedInput = input.trim().toLowerCase(); // 대소문자 구분 X
+      if (trimmedInput === 'yes' || trimmedInput === 'no') {
+        submitAnswer(surveyData!.mbtiType, trimmedInput === 'yes');
+        setSubmited(true);
+        onSubmit();
+      }
+    }
+  };
 
   if (!surveyData) {
     return <p>Loading...</p>;
@@ -63,17 +85,24 @@ const Result: React.FC = () => {
       {inputEnabled && (
         <div className="commands mt-4">
           <p>결과가 자신과 맞나요? yes/no</p>
-          <p>
-            &gt;&gt;&gt;{' '}
-            <input
-              type="text"
-              value={input}
-              onChange={handleInputChange}
-              // onKeyDown={''}
-              className="bg-black text-white outline-none"
-              autoFocus
-            />
-          </p>
+          {!isSubmited ? (
+            <p>
+              &gt;&gt;&gt;{' '}
+              <input
+                type="text"
+                value={input}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyPress}
+                className="bg-black text-white outline-none"
+                autoFocus
+              />
+            </p>
+          ) : (
+            <>
+              <p>&gt;&gt;&gt; {input}</p>
+              <p>{input}</p>
+            </>
+          )}
         </div>
       )}
     </div>
