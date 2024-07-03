@@ -132,7 +132,7 @@ Webti는 설문조사를 통해서 사용자의 적성이 프론트엔드인지 
 
   const aboutText = `
 Team-Name: meot-ppo
-Email: dsky03@naver.com
+member: Jeyong Song, Donghyeon Kang, Jeonghun Kim, Dongcheon Kim 
 GitHub: https://github.com/team-meot-ppo
 Interesting: backend, frontend
 Update: 2024/07/03

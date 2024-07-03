@@ -84,7 +84,7 @@ const Result: React.FC<Props> = ({ onSubmit }: Props) => {
       )}
       {inputEnabled && (
         <div className="commands mt-4">
-          <p>결과가 자신과 맞나요? yes/no</p>
+          <p>결과가 만족스러운가요? yes/no</p>
           {!isSubmited ? (
             <p>
               &gt;&gt;&gt;{' '}
