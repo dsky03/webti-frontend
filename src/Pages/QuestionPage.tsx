@@ -1,6 +1,6 @@
-import React from 'react';
-import QuestionBox from 'Components/QuestionBox';
-import TerminalBox from 'Components/TerminalBox';
+import React from "react";
+import QuestionBox from "Components/QuestionBox";
+import TerminalBox from "Components/TerminalBox";
 
 // 임의 페이지
 function QuestionPage() {

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { getQuestions, Question, UserAnswer } from 'util/api/api';
-import TypingEffect from './TypingEffect';
+import React, { useEffect, useState } from "react";
+import { getQuestions, Question, UserAnswer } from "util/api/api";
+import TypingEffect from "./TypingEffect";
+import { Link } from "react-router-dom";
 
 function QuestionBox() {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -22,7 +23,7 @@ function QuestionBox() {
   useEffect(() => {
     const fetch = async () => {
       const res = await getQuestions();
-      if (res?.success !== 'true') {
+      if (res?.success !== "true") {
         // 예외 처리
       }
       console.log(res.data);
@@ -37,7 +38,7 @@ function QuestionBox() {
   };
 
   const submitAnswer = async (answer: UserAnswer) => {
-    throw new Error('Function not implemented.');
+    throw new Error("Function not implemented.");
   };
 
   if (questions.length === 0) {
